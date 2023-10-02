@@ -297,7 +297,7 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   #sobre-mi, #sobre-mi .informacion {
     padding: 7% 6%;
   }
@@ -327,7 +327,7 @@ html {
   }
 }
 
-@media (min-width: 300px) and (max-width: 900px) {
+@media (min-width: 50px) and (max-width: 767px) {
   .mt-5, .my-5 {
     margin-top: 0rem !important;
   }
@@ -354,7 +354,7 @@ html {
   }
 }
 
-@media (min-width: 900px) and (max-width: 1250px) {
+@media (min-width: 767px) and (max-width: 1200px) {
 
   #cabecera .navbar {
     padding: 0 0;
