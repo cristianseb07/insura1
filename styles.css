@@ -1,0 +1,207 @@
+/* Reset & Base */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Roboto', sans-serif; overflow-x: hidden; background: #0b0f19; color: #ffffff; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; text-transform: uppercase; color: #ffffff; }
+
+/* NAVBAR DARK */
+#cabecera {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.4s ease;
+  background: #000000; 
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-toggler {
+  border-color: rgba(255,255,255,0.5) !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
+.navbar {
+  padding: 10px 1rem;
+}
+
+.navbar-brand img {
+  max-height: 50px;
+  transition: 0.3s;
+}
+
+/* Header Contact Info Inline */
+.header-contact {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-left: 20px;
+}
+.header-contact a {
+  color: white !important;
+  text-decoration: none;
+  display: flex !important;
+  align-items: center;
+  transition: 0.3s;
+}
+.header-contact a:hover {
+  color: #F12639 !important; /* Rojo al pasar el mouse */
+  text-decoration: underline;
+}
+.header-contact i {
+  width: 25px;
+  text-align: center;
+  margin-right: 8px;
+  color: #F12639;
+}
+
+/* Nav Links */
+.nav-link {
+  text-transform: capitalize;
+  font-weight: 500;
+  font-size: 1.15rem;
+  padding: 0.5rem 12px !important;
+  color: white !important;
+}
+.nav-link:hover { color: #F12639 !important; }
+
+/* Flags Visibility & Dropdown Order */
+.nav-flag {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.nav-flag img {
+  width: 30px;
+  height: auto;
+  margin: 0 5px;
+  border-radius: 2px;
+}
+
+@media (max-width: 1199px) {
+  .navbar-collapse {
+    background: #000000;
+    width: 100%;
+    border-radius: 0 0 15px 15px;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+  }
+  .navbar-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  .nav-flag {
+    order: 99; /* Asegura que queden al final del listado */
+    margin-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+}
+
+/* SECTIONS */
+section { padding: 100px 0; text-align: center; }
+
+section h2 { 
+  text-align: center !important; 
+  margin-bottom: 40px; 
+  font-weight: 700;
+}
+
+section p { 
+  font-size: 1.1rem; 
+  color: #c9d1d9; 
+  line-height: 1.8; 
+  max-width: 800px; 
+  margin: 0 auto 20px; 
+  text-align: justify;
+}
+
+/* HERO FAQ */
+#faq {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/Environmental-Compliance.jpg'); /* Restaurado fondo solicitado */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+#faq .informacion img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+#faq h1 { 
+  font-family: 'Oswald', sans-serif;
+  font-size: 5rem; 
+  color: #007bff; 
+  font-weight: 700; 
+  letter-spacing: 5px; 
+  margin-bottom: 10px;
+  -webkit-text-stroke: 1.5px white;
+}
+
+#faq h4 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFFFFF; /* Todo en blanco solicitado */
+  letter-spacing: 2px;
+  -webkit-text-stroke: 0px transparent; /* Sin bordes */
+  text-transform: none !important;
+}
+
+/* Sobre Nosotros con fondo shutterstock solicitado */
+#sobre-mi {
+  background: linear-gradient(rgba(11,15,25,0.9), rgba(11,15,25,0.9)), url('images/shutterstock_1183609642.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+#precios { 
+  background: linear-gradient(rgba(19,25,38,0.9), rgba(19,25,38,0.9)), url('images/Gears_(20437315996).jpg'); 
+  background-size: cover;
+  background-position: center;
+}
+
+#servicios { background: #0b0f19; }
+
+/* Productos Destacados */
+.precio-card .card { background: rgba(28, 36, 56, 0.9); color: white; border: none; transition: 0.3s; }
+.precio-card .card:hover { transform: translateY(-5px); }
+
+/* FOOTER con fondo portfolio solicitado */
+#pie { 
+  background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('images/portfolio.jpg'); 
+  background-size: cover;
+  background-position: center;
+  color: white; 
+  padding: 60px 0 30px; 
+}
+.footer-social a { color: white; margin: 0 10px; }
+
+/* Carrito & Modals Dark */
+.modal-content { background: #131926; color: white; border-radius: 12px; }
+.form-control { background: #1c2438; border: 1px solid #2d3a5a; color: white; }
+
+.cart-floating {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #F12639;
+  color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+}

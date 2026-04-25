@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSURA Admin - Gestión avanzada</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+        .app-container { max-width: 1100px; margin: 30px auto; padding: 20px; }
+        .card { border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .product-card { padding: 15px; margin-bottom: 10px; background: white; border-radius: 8px; display: flex; align-items: center; gap: 15px; border-left: 5px solid #007bff; }
+        .product-img { width: 50px; height: 50px; object-fit: contain; }
+        .code-preview { background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.85rem; height: 500px; overflow-y: auto; }
+        .variant-item { display: flex; gap: 5px; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">INSURA Advanced Management</span>
+        <a href="catalogo.html" class="btn btn-outline-light btn-sm">Regresar al Sitio</a>
+    </nav>
+
+    <div class="app-container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="card p-4 mb-4">
+                    <h5 class="mb-3 text-primary">📦 Edición de Producto</h5>
+                    <form id="productForm">
+                        <input type="hidden" id="pId">
+                        <div class="row">
+                            <div class="col-8"><div class="form-group"><label>Nombre</label><input type="text" id="pName" class="form-control" required></div></div>
+                            <div class="col-4"><div class="form-group"><label>Rama / Categoría</label><input type="text" id="pCat" class="form-control" placeholder="Ej: Soldadura" required></div></div>
+                        </div>
+                        <div class="form-group"><label>Descripción</label><textarea id="pDesc" class="form-control" rows="2" required></textarea></div>
+                        
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Imagen</label>
+                                    <input type="file" id="pFile" class="form-control-file mb-1" onchange="updateFileName(this)">
+                                    <input type="text" id="pImg" class="form-control btn-sm" placeholder="images/ejemplo.png">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Precio Visual</label>
+                                    <input type="text" id="pPriceStr" class="form-control" placeholder="Ej: $1.500 o Consultar" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6"><div class="form-group"><label>Stock</label><input type="number" id="pStock" class="form-control" value="0"></div></div>
+                            <div class="col-6"><div class="form-group"><label>Link Comprar (Opcional)</label><input type="text" id="pLink" class="form-control"></div></div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label>Variantes</label>
+                            <div id="vList"></div>
+                            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" onclick="addV()">+ Variante</button>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary btn-block" id="saveBtn">Guardar Producto</button>
+                            <button type="button" class="btn btn-light btn-block btn-sm mt-2" onclick="clearForm()">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="pList"></div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card p-3 sticky-top" style="top: 20px;">
+                    <h6>📄 Salida products.js</h6>
+                    <div class="code-preview" id="codeArea"></div>
+                    <div class="mt-3">
+                        <button class="btn btn-success btn-block" onclick="downloadJS()">💾 Descargar Archivo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="js/products.js"></script>
+    <script>
+        let products = window.productsData || [];
+
+        function renderList() {
+            const list = $('#pList').empty();
+            products.forEach((p, index) => {
+                list.append(`
+                    <div class="product-card">
+                        <img src="${p.image}" class="product-img">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0 font-weight-bold">${p.name}</h6>
+                            <small class="badge badge-secondary">${p.category}</small>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-info" onclick="editP(${index})">E</button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="delP(${index})">X</button>
+                        </div>
+                    </div>
+                `);
+            });
+            updateOutput();
+        }
+
+        function updateOutput() {
+            $('#codeArea').text(`window.productsData = ${JSON.stringify(products, null, 4)};`);
+        }
+
+        function updateFileName(input) {
+            if (input.files && input.files[0]) $('#pImg').val('images/' + input.files[0].name);
+        }
+
+        function addV(name = "", price = 0) {
+            $('#vList').append(`<div class="variant-item"><input type="text" class="form-control form-control-sm vName" placeholder="Nombre" value="${name}"><input type="number" class="form-control form-control-sm vPrice" value="${price}"><button type="button" class="btn btn-sm btn-danger" onclick="$(this).parent().remove()">×</button></div>`);
+        }
+
+        $('#productForm').on('submit', function(e) {
+            e.preventDefault();
+            const variants = [];
+            $('.variant-item').each(function() {
+                variants.push({ name: $(this).find('.vName').val(), price: parseFloat($(this).find('.vPrice').val()) });
+            });
+            const idIdx = $('#pId').val();
+            const p = {
+                id: idIdx !== "" ? products[idIdx].id : Date.now(),
+                name: $('#pName').val(),
+                category: $('#pCat').val(),
+                description: $('#pDesc').val(),
+                image: $('#pImg').val(),
+                priceDisplay: $('#pPriceStr').val(),
+                stock: parseInt($('#pStock').val()) || 0,
+                variants: variants,
+                link: $('#pLink').val() || "#"
+            };
+            if(idIdx !== "") products[idIdx] = p; else products.push(p);
+            clearForm(); renderList();
+        });
+
+        window.editP = (i) => {
+            const p = products[i]; $('#pId').val(i); $('#pName').val(p.name); $('#pCat').val(p.category); $('#pDesc').val(p.description); $('#pImg').val(p.image); $('#pPriceStr').val(p.priceDisplay); $('#pStock').val(p.stock); $('#pLink').val(p.link); $('#vList').empty(); p.variants.forEach(v => addV(v.name, v.price)); $('#saveBtn').text('Actualizar');
+        };
+
+        window.delP = (i) => { if(confirm('¿Eliminar?')) { products.splice(i,1); renderList(); } };
+        window.clearForm = () => { $('#productForm')[0].reset(); $('#pId').val(''); $('#vList').empty(); $('#saveBtn').text('Guardar'); };
+        window.downloadJS = () => { const blob = new Blob([$('#codeArea').text()], {type: 'text/javascript'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'products.js'; a.click(); };
+
+        renderList();
+    </script>
+</body>
+</html>
