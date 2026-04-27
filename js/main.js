@@ -107,13 +107,13 @@ function renderProductsHome() {
                     </div>
                     <div class="card-body text-center">
                         <p class="small text-muted">${p.description}</p>
-                        <p class="font-weight-bold text-danger">${p.priceDisplay}</p>
                     </div>
                     <div class="card-footer bg-transparent border-0 pb-4">
-                        <a class="btn btn-primary btn-block rounded-pill" href="catalogo.html">Ver en Catálogo</a>
+                        <a class="btn btn-primary btn-block rounded-pill" href="catalogo.html?id=${p.id}">Ver en Catálogo</a>
                     </div>
                 </div>
             </div>
         `);
     });
 }
+
