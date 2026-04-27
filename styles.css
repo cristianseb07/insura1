@@ -108,10 +108,11 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Oswald', sans-serif; text-transform: uppe
   }
   .navbar-toggler {
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 2px 5px;
+    right: 15px;
+    bottom: 20px; /* Align with the contact info block */
+    top: auto;
+    transform: none;
+    padding: 4px 6px;
   }
 }
 
